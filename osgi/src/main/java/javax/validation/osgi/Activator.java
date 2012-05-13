@@ -34,12 +34,12 @@ public class Activator implements BundleActivator {
 
 	public void start(BundleContext context) throws Exception {
 
-		tracker = new ValidationProviderServiceTracker( context );
-		tracker.open();
+//		tracker = new ValidationProviderServiceTracker( context );
+//		tracker.open();
 	}
 
 	public void stop(BundleContext context) throws Exception {
-		tracker.close();
+//		tracker.close();
 	}
 
 }
