@@ -112,7 +112,10 @@ public interface ConstraintValidatorContext {
 		 * @param name property name
 		 * @return a builder representing node {@code name}
 		 */
-		NodeBuilderDefinedContext addNode(String name);
+		<T extends NodeBuilderDefinedContext & NodeBuilderCustomizableContext> T addNode(String name);
+
+		//does not work as left-most type is changed
+		//<T extends NodeBuilderCustomizableContext & NodeBuilderDefinedContext> T addNode(String name);
 
 		/**
 		 * Add the new {@code ConstraintViolation} to be generated if the
