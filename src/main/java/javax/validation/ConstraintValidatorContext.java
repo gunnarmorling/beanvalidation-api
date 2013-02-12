@@ -111,6 +111,7 @@ public interface ConstraintValidatorContext {
 	 * </pre>
 	 *
 	 * @param messageTemplate new un-interpolated constraint message.
+	 *
 	 * @return Returns an constraint violation builder
 	 */
 	ConstraintViolationBuilder buildConstraintViolationWithTemplate(String messageTemplate);
@@ -126,7 +127,6 @@ public interface ConstraintValidatorContext {
 	 * @return an instance of the specified class
 	 *
 	 * @throws ValidationException if the provider does not support the call.
-	 *
 	 * @since 1.1
 	 */
 	<T> T unwrap(Class<T> type);
@@ -141,7 +141,6 @@ public interface ConstraintValidatorContext {
 	 * If another method is called after #addConstraintViolation() on
 	 * {@code ConstraintViolationBuilder} or any of its associated objects
 	 * an {@code IllegalStateException} is raised.
-	 * 
 	 */
 	interface ConstraintViolationBuilder {
 		/**
@@ -151,9 +150,19 @@ public interface ConstraintValidatorContext {
 		 * dot (.) is not allowed.
 		 *
 		 * @param name property name
+		 *
 		 * @return a builder representing node {@code name}
+		 *
+		 * @deprecated Use {@link #addPropertyNode(String)} instead.
 		 */
+		@Deprecated
 		<T extends NodeBuilderDefinedContext & NodeBuilderCustomizableContext> T addNode(String name);
+
+		NodeBuilderCustomizableContext addPropertyNode(String name);
+
+		NodeBuilderBeanContext addBeanNode();
+
+		NodeBuilderDefinedContext addParameterNode(int parameterIndex);
 
 		/**
 		 * Add the new {@code ConstraintViolation} to be generated if the
@@ -162,7 +171,7 @@ public interface ConstraintValidatorContext {
 		 * objects return {@code IllegalStateException} from now on.
 		 *
 		 * @return the {@code ConstraintValidatorContext} instance the
-		 *           {@code ConstraintViolationBuilder} comes from
+		 *         {@code ConstraintViolationBuilder} comes from
 		 */
 		ConstraintValidatorContext addConstraintViolation();
 
@@ -176,12 +185,20 @@ public interface ConstraintValidatorContext {
 			 * Add a node to the path the {@code ConstraintViolation} will be associated to.
 			 *
 			 * {@code name} describes a single property. In particular,
-	         * dot (.) are not allowed.
+			 * dot (.) are not allowed.
 			 *
 			 * @param name property {@code name}
+			 *
 			 * @return a builder representing this node
+			 *
+			 * @deprecated Use {@link #addPropertyNode(String)} instead.
 			 */
+			@Deprecated
 			NodeBuilderCustomizableContext addNode(String name);
+
+			NodeBuilderCustomizableContext addPropertyNode(String name);
+
+			NodeBuilderBeanContext addBeanNode();
 
 			/**
 			 * Add the new {@code ConstraintViolation} to be generated if the
@@ -191,7 +208,7 @@ public interface ConstraintValidatorContext {
 			 * objects return {@code IllegalStateException} after this call.
 			 *
 			 * @return {@code ConstraintValidatorContext} instance the
-			 *           {@code ConstraintViolationBuilder} comes from
+			 *         {@code ConstraintViolationBuilder} comes from
 			 */
 			ConstraintValidatorContext addConstraintViolation();
 		}
@@ -204,7 +221,7 @@ public interface ConstraintValidatorContext {
 
 			/**
 			 * Mark the node as being in an {@code Iterable} or a {@code Map}
-			 * 
+			 *
 			 * @return a builder representing iterable details
 			 */
 			NodeContextBuilder inIterable();
@@ -213,12 +230,20 @@ public interface ConstraintValidatorContext {
 			 * Add a node to the path the {@code ConstraintViolation} will be associated to.
 			 *
 			 * {@code name} describes a single property. In particular,
-	         * dot (.) are not allowed.
+			 * dot (.) are not allowed.
 			 *
 			 * @param name property {@code name}
+			 *
 			 * @return a builder representing this node
+			 *
+			 * @deprecated Use {@link #addPropertyNode(String)} instead.
 			 */
+			@Deprecated
 			NodeBuilderCustomizableContext addNode(String name);
+
+			NodeBuilderCustomizableContext addPropertyNode(String name);
+
+			NodeBuilderBeanContext addBeanNode();
 
 			/**
 			 * Add the new {@code ConstraintViolation} to be generated if the
@@ -228,7 +253,7 @@ public interface ConstraintValidatorContext {
 			 * objects return {@code IllegalStateException} after this call.
 			 *
 			 * @return {@code ConstraintValidatorContext} instance the
-			 *           {@code ConstraintViolationBuilder} comes from
+			 *         {@code ConstraintViolationBuilder} comes from
 			 */
 			ConstraintValidatorContext addConstraintViolation();
 		}
@@ -240,11 +265,12 @@ public interface ConstraintValidatorContext {
 		 * the index or the key should be set.
 		 */
 		interface NodeContextBuilder {
-			
+
 			/**
 			 * Define the key the object is into the {@code Map}
 			 *
 			 * @param key map key
+			 *
 			 * @return a builder representing the current node
 			 */
 			NodeBuilderDefinedContext atKey(Object key);
@@ -253,6 +279,7 @@ public interface ConstraintValidatorContext {
 			 * Define the index the object is into the {@code List} or array
 			 *
 			 * @param index index
+			 *
 			 * @return a builder representing the current node
 			 */
 			NodeBuilderDefinedContext atIndex(Integer index);
@@ -261,12 +288,20 @@ public interface ConstraintValidatorContext {
 			 * Add a node to the path the {@code ConstraintViolation} will be associated to.
 			 *
 			 * {@code name} describes a single property. In particular,
-	         * dot (.) is not allowed.
+			 * dot (.) is not allowed.
 			 *
 			 * @param name property {@code name}
+			 *
 			 * @return a builder representing this node
+			 *
+			 * @deprecated Use {@link #addPropertyNode(String)} instead.
 			 */
+			@Deprecated
 			NodeBuilderCustomizableContext addNode(String name);
+
+			NodeBuilderCustomizableContext addPropertyNode(String name);
+
+			NodeBuilderBeanContext addBeanNode();
 
 			/**
 			 * Add the new {@code ConstraintViolation} to be generated if the
@@ -276,8 +311,13 @@ public interface ConstraintValidatorContext {
 			 * objects return {@code IllegalStateException} after this call.
 			 *
 			 * @return {@code ConstraintValidatorContext} instance the
-			 *           {@code ConstraintViolationBuilder} comes from
+			 *         {@code ConstraintViolationBuilder} comes from
 			 */
+			ConstraintValidatorContext addConstraintViolation();
+		}
+
+		interface NodeBuilderBeanContext {
+
 			ConstraintValidatorContext addConstraintViolation();
 		}
 	}

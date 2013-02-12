@@ -16,7 +16,7 @@
 */
 package javax.validation;
 
-import javax.validation.metadata.ElementDescriptor;
+import javax.validation.metadata.ElementDescriptor.Kind;
 
 /**
  * Represents the navigation path from an object to another
@@ -64,15 +64,32 @@ public interface Path extends Iterable<Path.Node> {
 		 */
 		Object getKey();
 
-		/**
-		 * Returns a descriptor for the element (bean, property, method etc.)
-		 * represented by this node. The specific type of the element can be
-		 * determined using {@link ElementDescriptor#getKind()}.
-		 *
-		 * @return An element descriptor for this node.
-		 *
-		 * @since 1.1
-		 */
-		ElementDescriptor getElementDescriptor();
+		Kind getKind();
+
+		<T extends Node> T as(Class<T> nodeType);
+	}
+
+	interface MethodNode extends Node {
+
+		Class<?> getParameterTypes();
+	}
+
+	interface ConstructorNode extends Node {
+
+		Class<?> getParameterTypes();
+	}
+
+	interface ReturnValueNode extends Node {
+	}
+
+	interface ParameterNode extends Node {
+
+		int getParameterIndex();
+	}
+
+	interface BeanNode extends Node {
+	}
+
+	interface PropertyNode extends Node {
 	}
 }
